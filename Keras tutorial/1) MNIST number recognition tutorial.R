@@ -18,15 +18,15 @@ set.seed(123)
 #take the MNIST number dataset
 mnist <- dataset_mnist()
 
-#Make training and testing sets of the x data (3-d array (images,width,height) of grayscale values).
+#Make training and testing sets of the x values (3-d array (width, height, grayscale values)).
 x_train <- mnist$train$x
 x_test <- mnist$test$x
 
-#Make training and testing sets of the y data (integer vector with values ranging from 0 to 9).
+#Make training and testing sets of the y values (integer vector with values ranging from 0 to 9).
 y_train <- mnist$train$y
 y_test <- mnist$test$y
 
-#Reshape the image pixel matrix into a long vector (24x 24 becomes rowvector of 784)
+#Reshape the image pixel matrix into a long vector (24x 24 pixels become a rowvector of 784)
 x_train <- array_reshape(x_train, c(nrow(x_train), 784))
 x_test <- array_reshape(x_test, c(nrow(x_test), 784))
 
@@ -36,7 +36,7 @@ x_train <- x_train / 255
 x_test <- x_test / 255
 
 
-#turn the actual outcomes into a binary matrix
+#turn the actual outcomes (y) into a binary matrix 
 y_train <- to_categorical(y_train, 10)
 y_test <- to_categorical(y_test, 10)
 
@@ -51,8 +51,8 @@ model %>%
   layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>% 
   layer_dropout(rate = 0.4) %>% 
 
-#This is the second layer in the model, for which the algorithm finds itself chooses what patterns it is looking for  
-  layer_dense(units = 128, activation = 'relu') %>%
+#This is the second layer in the model, for which the algorithm itself chooses what patterns it is looking for  
+  layer_dense(units = 800, activation = 'relu') %>%
   layer_dropout(rate = 0.3) %>%
 
 #this layer gives the length of the OUTPUT data (a value between 0-9). 
@@ -80,5 +80,3 @@ plot(history)
 
 #test the model on the testsets
 model %>% evaluate(x_test, y_test)
-
-
